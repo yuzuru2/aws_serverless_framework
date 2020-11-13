@@ -6,6 +6,8 @@ import Router from 'next/router';
 import i_reducer from 'src/interface/reducer';
 import slice from 'src/reducers/home';
 
+import slice_basic from 'src/reducers/basic';
+
 const pagination = () => {
   const state = useSelector(state => state) as i_reducer;
   const dispatch = useDispatch();
@@ -18,6 +20,7 @@ const pagination = () => {
           itemsCountPerPage={10}
           totalItemsCount={state.home.count}
           onChange={async (num: number) => {
+            dispatch(slice_basic.actions.loading(true));
             dispatch(slice.actions.pagination(num));
             Router.push(`/info/${num}`);
             window.scrollTo(0, 0);

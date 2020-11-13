@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 import i_reducer from 'src/interface/reducer';
 import Constant from 'src/constant';
@@ -13,12 +14,20 @@ import TitleList from 'src/components/util/titleList';
 import Pagination from 'src/components/info/pagination';
 import Header from 'src/components/util/header';
 import Modal from 'src/components/util/homeModal';
+import Loading from 'src/components/util/loading';
 
 import { withRedux } from 'src/lib/redux';
 
 import slice from 'src/reducers/home';
+import slice_basic from 'src/reducers/basic';
 
 const Info = () => {
+  const state = useSelector(state => state) as i_reducer;
+
+  if (state.basic.loading) {
+    return <Loading />;
+  }
+
   return (
     <>
       <Head />
@@ -89,6 +98,8 @@ Info.getInitialProps = async ({
     reduxStore.dispatch(slice.actions.count(_ret.count));
     reduxStore.dispatch(slice.actions.data(_ret.list));
     reduxStore.dispatch(slice.actions.pagination(Number(num)));
+
+    reduxStore.dispatch(slice_basic.actions.loading(false));
   } catch (err) {}
 };
 

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 import i_reducer from 'src/interface/reducer';
 import Constant from 'src/constant';
@@ -13,13 +14,19 @@ import List from 'src/components/talks/list';
 import Propaganda from 'src/components/util/propaganda';
 import Pagination from 'src/components/talks/pagination';
 import Modal from 'src/components/util/talkModal';
+import Loading from 'src/components/util/loading';
 
 import { withRedux } from 'src/lib/redux';
 
 import slice from 'src/reducers/talk';
+import slice_basic from 'src/reducers/basic';
 
 const Genre = () => {
-  React.useEffect(() => {}, []);
+  const state = useSelector(state => state) as i_reducer;
+
+  if (state.basic.loading) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -94,6 +101,8 @@ Genre.getInitialProps = async ({
     reduxStore.dispatch(slice.actions.data(_ret.list));
     reduxStore.dispatch(slice.actions.count(_ret.count));
     reduxStore.dispatch(slice.actions.pagination(Number(num)));
+
+    reduxStore.dispatch(slice_basic.actions.loading(false));
   } catch (err) {}
 };
 

@@ -24,7 +24,7 @@ process.env.NODE_ENV !== 'development'
         origin: Constant.origin,
       })
     )
-  : app.options('*', Cors());
+  : app.use(Cors());
 
 // postリクエスト使えるようにする
 app.use(Express.json());

@@ -5,6 +5,8 @@ import axios from 'axios';
 import i_reducer from 'src/interface/reducer';
 import Constant from 'src/constant';
 
+import slice_basic from 'src/reducers/basic';
+
 const initialState: i_reducer['home'] = {
   pagination: 1,
   count: 0,
@@ -62,6 +64,9 @@ export const post = (params: { name: string; genreId: number }) => async (
       alert('板名を入力してください');
       return;
     }
+
+    // loading
+    dispatch(slice_basic.actions.loading(true));
 
     dispatch(slice.actions.post_name(''));
 

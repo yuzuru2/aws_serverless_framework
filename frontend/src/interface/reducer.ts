@@ -1,4 +1,8 @@
 export default interface reducer {
+  basic: {
+    loading: boolean;
+  };
+
   home: {
     pagination: number;
     count: number;

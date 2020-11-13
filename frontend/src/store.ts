@@ -8,12 +8,14 @@ import thunk from 'redux-thunk';
 // reducer
 import home_slice from 'src/reducers/home';
 import talk_slice from 'src/reducers/talk';
+import basic_slice from 'src/reducers/basic';
 
 export const initializeStore = (state: any) => {
   return createStore(
     combineReducers({
       home: home_slice.reducer,
       talk: talk_slice.reducer,
+      basic: basic_slice.reducer,
     }),
     state,
     applyMiddleware(...[thunk])
